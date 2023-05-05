@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:data_mysql/main_screens/cart_screen.dart';
+import 'package:data_mysql/main_screens/visit_store.dart';
 import 'package:data_mysql/minor_screens/full_screen_view.dart';
 import 'package:data_mysql/model/product_modle.dart';
-import 'package:data_mysql/widget/yellow_btn_widget.dart';
+import 'package:data_mysql/widget/appbar_widgets.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
@@ -194,25 +197,38 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
           bottomSheet: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: SizedBox(
-              height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(onPressed: () {
-                    
-                  }, icon: const Icon(Icons.store)),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
-                  YellowBtn(
-                      label: 'add to cart'.toUpperCase(),
-                      onPressed: () {},
-                      width: 0.55)
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return VisitStore(supid: widget.proList['sid']);
+                        },
+                      ));
+                    },
+                    icon: const Icon(Icons.store)),
+                const SizedBox(
+                  width: 20,
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return CartScreen(
+                          back: AppBarBackButton(),
+                        );
+                      },
+                    ));
+                  },
+                  icon: const Icon(Icons.shopping_cart),
+                ),
+                YellowBtn(
+                    label: 'add to cart'.toUpperCase(),
+                    onPressed: () {},
+                    width: 0.55)
+              ],
             ),
           ),
         ),
