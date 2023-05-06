@@ -3,10 +3,12 @@ import 'package:data_mysql/main_screens/cart_screen.dart';
 import 'package:data_mysql/main_screens/visit_store.dart';
 import 'package:data_mysql/minor_screens/full_screen_view.dart';
 import 'package:data_mysql/model/product_modle.dart';
+import 'package:data_mysql/provider/cart_provider.dart';
 import 'package:data_mysql/widget/appbar_widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:provider/provider.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
@@ -216,7 +218,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return CartScreen(
+                        return const CartScreen(
                           back: AppBarBackButton(),
                         );
                       },
@@ -226,7 +228,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 YellowBtn(
                     label: 'add to cart'.toUpperCase(),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<Cart>().addItem(
+                            widget.proList['proname'],
+                            widget.proList['price'],
+                            1,
+                            widget.proList['instock'],
+                            widget.proList['proImage'],
+                            widget.proList['proId'],
+                            widget.proList['sid'],
+                          );
+                    },
                     width: 0.55)
               ],
             ),

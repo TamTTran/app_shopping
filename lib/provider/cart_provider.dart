@@ -18,6 +18,13 @@ class Product {
     required this.imageUrl,
     required this.supid,
   });
+  void increase() {
+    qty++;
+  }
+  void decrease() {
+    qty--;
+  }
+
 }
 
 class Cart extends ChangeNotifier {
@@ -28,10 +35,33 @@ class Cart extends ChangeNotifier {
 
   int? get count {
     _list.length;
+
   }
 
-  void addItem(String name, double price, int qty, int qnty, List imageUrl,
-      String documentId, String supid) {
-        final product = Product(name: name, price: price, qty: qty, qnty: qnty, documentId: documentId, imageUrl: imageUrl, supid: supid);
-      }
+  void addItem(
+    String name, double price, int qty, int qnty, List imageUrl,
+      String documentId, String supid) 
+  {
+    final product = Product(
+        name: name,
+        price: price,
+        qty: 1,
+        qnty: qnty,
+        documentId: documentId,
+        imageUrl: imageUrl,
+        supid: supid);
+
+        _list.add(product);
+        notifyListeners();
+  }
+
+  void increment(Product product) {
+    product.increase();
+    notifyListeners();
+  } 
+  void reduceByone(Product product) {
+    product.decrease();
+    notifyListeners();
+  } 
+
 }
