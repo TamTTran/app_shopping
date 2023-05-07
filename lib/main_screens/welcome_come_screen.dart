@@ -1,9 +1,13 @@
+// ignore_for_file: duplicate_import
+
 import 'dart:math';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_mysql/main_screens/cart_screen.dart';
+import 'package:data_mysql/widget/yellow_btn_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 
 class WelcomeComeScreen extends StatefulWidget {
   const WelcomeComeScreen({Key? key}) : super(key: key);
@@ -203,14 +207,11 @@ class _WelcomeComeScreenState extends State<WelcomeComeScreen>
                                   'address': '',
                                   'cid': _uid,
                                 });
-                              });
-
-                              // ignore: use_build_context_synchronously
+                              });                          
                               Navigator.pushReplacementNamed(
                                   context, '/customer_screen');
                             },
-                            // ignore: prefer_const_constructors
-                            child: Icon(
+                            child: const Icon(
                               Icons.person,
                               color: Colors.blueAccent,
                               size: 30,
@@ -235,8 +236,8 @@ class TextAnimated extends StatelessWidget {
     return AnimatedTextKit(
       animatedTexts: [
         ColorizeAnimatedText(label1.toUpperCase(),
-            // ignore: prefer_const_constructors
-            textStyle: TextStyle(
+          
+            textStyle: const TextStyle(
               fontSize: 45,
               fontWeight: FontWeight.bold,
               fontFamily: 'Acme',

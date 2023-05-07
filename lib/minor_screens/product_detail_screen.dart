@@ -5,12 +5,14 @@ import 'package:data_mysql/minor_screens/full_screen_view.dart';
 import 'package:data_mysql/model/product_modle.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
 import 'package:data_mysql/widget/appbar_widgets.dart';
-
+import 'package:data_mysql/widget/snackbar_widget.dart';
+import 'package:data_mysql/widget/yellow_btn_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:provider/provider.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
+import 'package:collection/collection.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final dynamic proList;
@@ -21,16 +23,19 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  late final Stream<QuerySnapshot> _productStream = FirebaseFirestore.instance
+      .collection('products')
+      .where('maincateg', isEqualTo: widget.proList['maincateg'])
+      .where('subcateg', isEqualTo: widget.proList['subcateg'])
+      .snapshots();
+  final GlobalKey<ScaffoldMessengerState> _snackKey =
+      GlobalKey<ScaffoldMessengerState>();
+  late List<dynamic> imageList = widget.proList['proImage'];
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> productStream = FirebaseFirestore.instance
-        .collection('products')
-        .where('maincateg', isEqualTo: widget.proList['maincateg'])
-        .where('subcateg', isEqualTo: widget.proList['subcateg'])
-        .snapshots();
-    late List<dynamic> imageList = widget.proList['proImage'];
-    return Material(
-      child: SafeArea(
+    return SafeArea(
+      child: ScaffoldMessenger(
+        key: _snackKey,
         child: Scaffold(
           body: SingleChildScrollView(
             child: Column(
@@ -154,7 +159,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     producItemDescription: 'Recommended Items'),
                 SizedBox(
                   child: StreamBuilder<QuerySnapshot>(
-                    stream: productStream,
+                    stream: _productStream,
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasError) {
@@ -229,7 +234,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 YellowBtn(
                     label: 'add to cart'.toUpperCase(),
                     onPressed: () {
-                      context.read<Cart>().addItem(
+                      context.read<Cart>().getItems.firstWhereOrNull(
+                                  (product) =>
+                                      product.documentId ==
+                                      widget.proList['proId']) !=
+                              null
+                          ? MyMessageHandler.showSnackBar(
+                              _snackKey, 'this item already cart')
+                          : context.read<Cart>().addItem(
                             widget.proList['proname'],
                             widget.proList['price'],
                             1,

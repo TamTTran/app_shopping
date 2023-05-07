@@ -210,7 +210,6 @@ class _SupplierSignUpState extends State<SupplierSignUp> {
                             }
                             return null;
                           },
-                          //controller: _nameController,
                           onChanged: (value) {
                             storeName = value;
                           },
