@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
+import 'package:data_mysql/provider/wish_provider.dart';
 import 'package:data_mysql/widget/alert_dialog.dart';
 import 'package:data_mysql/widget/yellow_btn_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -188,9 +191,90 @@ class CartItems extends StatelessWidget {
                                         children: [
                                           product.qty == 1
                                               ? IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    showCupertinoModalPopup<
+                                                        void>(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          CupertinoActionSheet(
+                                                        title: const Text(
+                                                            'RemoveItem'),
+                                                        message: const Text(
+                                                            'Are you sure to move this item ?'),
+                                                        actions: <
+                                                            CupertinoActionSheetAction>[
+                                                          CupertinoActionSheetAction(
+                                                            child: const Text(
+                                                                'Move to Wishlist'),
+                                                            onPressed:
+                                                                () async {
+                                                              context.read<Wish>().getWishItems.firstWhereOrNull((element) =>
+                                                                          element
+                                                                              .documentId ==
+                                                                          product
+                                                                              .documentId) !=
+                                                                      null
+                                                                  ? context
+                                                                      .read<
+                                                                          Cart>()
+                                                                      .removeItem(
+                                                                          product)
+                                                                  : await context
+                                                                      .read<
+                                                                          Wish>()
+                                                                      .addWishItem(
+                                                                        product
+                                                                            .name,
+                                                                        product
+                                                                            .price,
+                                                                        product
+                                                                            .qty,
+                                                                        product
+                                                                            .qnty,
+                                                                        product
+                                                                            .imageUrl,
+                                                                        product
+                                                                            .documentId,
+                                                                        product
+                                                                            .supid,
+                                                                      );
+                                                              context
+                                                                  .read<Cart>()
+                                                                  .removeItem(
+                                                                      product);
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                          ),
+                                                          CupertinoActionSheetAction(
+                                                            onPressed: () {
+                                                              context.read<Cart>().removeItem(product);
+                                                              Navigator.pop(context);
+                                                            },
+                                                            child: const Text(
+                                                                'Delete item'),
+                                                          ),
+                                                        ],
+                                                        cancelButton:
+                                                            TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: const Text(
+                                                            'Cancel',
+                                                            style: TextStyle(
+                                                                fontSize: 20,
+                                                                color:
+                                                                    Colors.red),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
                                                   icon: const Icon(
-                                                    FontAwesomeIcons.minus,
+                                                    Icons.delete_forever,
                                                     size: 18,
                                                   ),
                                                 )

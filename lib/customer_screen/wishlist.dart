@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
 import 'package:data_mysql/provider/wish_provider.dart';
+import 'package:data_mysql/widget/alert_dialog.dart';
 import 'package:data_mysql/widget/appbar_widgets.dart';
+import 'package:data_mysql/widget/snackbar_widget.dart';
 //import 'package:data_mysql/widget/alert_dialog.dart';
 import 'package:data_mysql/widget/yellow_btn_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WishListScreen extends StatefulWidget {
-  
-  const WishListScreen({Key? key,}) : super(key: key);
+  const WishListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   WishListScreenState createState() => WishListScreenState();
@@ -23,7 +27,7 @@ class WishListScreenState extends State<WishListScreen> {
         child: Scaffold(
           backgroundColor: Colors.grey.shade200,
           appBar: AppBar(
-            leading: AppBarBackButton(),
+            leading: const AppBarBackButton(),
             elevation: 0,
             title: const Text(
               'WishList',
@@ -36,7 +40,7 @@ class WishListScreenState extends State<WishListScreen> {
             backgroundColor: Colors.white,
             centerTitle: true,
             actions: [
-              /* context.watch<Cart>().getItems.isEmpty
+               context.watch<Wish>().getWishItems.isEmpty
                   ? const SizedBox()
                   : IconButton(
                       onPressed: () {
@@ -45,7 +49,7 @@ class WishListScreenState extends State<WishListScreen> {
                             title: 'Clear Cart',
                             content: 'Are you to clear cart',
                             tabYes: () {
-                              context.read<Cart>().clearCart();
+                              context.read<Wish>().clearWishCart();
                               Navigator.pop(context);
                             },
                             tabNo: () {
@@ -54,24 +58,24 @@ class WishListScreenState extends State<WishListScreen> {
                       },
                       icon: const Icon(Icons.delete_forever),
                       color: Colors.black,
-                    ) */
+                    ) 
             ],
           ),
           body: context.watch<Wish>().getWishItems.isNotEmpty
-              ? CartWishItems()
-              : EmptyCart(),
+              ? const CartWishItems()
+              : const EmptyCart(),
           bottomSheet: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Row(
                 children: const [
-                   Text(
+                  Text(
                     'Total:  \$',
                     style: TextStyle(fontSize: 18),
                   ),
                   Text(
                     '00.00',
-                    style:  TextStyle(
+                    style: TextStyle(
                         color: Colors.red,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
@@ -136,8 +140,8 @@ class CartWishItems extends StatelessWidget {
                       SizedBox(
                         height: 100,
                         width: 120,
-                        child:
-                            Image.network(wish.getWishItems[index].imageUrl.first),
+                        child: Image.network(
+                            wish.getWishItems[index].imageUrl.first),
                       ),
                       Flexible(
                         child: Padding(
@@ -169,16 +173,53 @@ class CartWishItems extends StatelessWidget {
                                       children: [
                                         IconButton(
                                           onPressed: () {
-                                            context.read<Wish>().removeItem(product);
+                                            context
+                                                .read<Wish>()
+                                                .removeItem(product);
                                           },
                                           icon:
                                               const Icon(Icons.delete_forever),
                                         ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon:
-                                              const Icon(Icons.add_shopping_cart),
-                                        ),
+                                        const SizedBox(width: 10),
+                                        context
+                                                    .watch<Cart>()
+                                                    .getItems
+                                                    .firstWhereOrNull(
+                                                        (element) =>
+                                                            element
+                                                                .documentId ==
+                                                            product
+                                                                .documentId) !=
+                                                null
+                                            ? const SizedBox()
+                                            : IconButton(
+                                                 onPressed: () {
+                                           /*       context
+                                                              .read<Cart>()
+                                                              .getItems
+                                                              .firstWhereOrNull(
+                                                                  (element) =>
+                                                                      element
+                                                                          .documentId ==
+                                                                      product
+                                                                          .documentId) !=
+                                                          null
+                                                      ? print('in cart'): */
+                                                      context
+                                                          .read<Cart>()
+                                                          .addItem(
+                                                            product.name,
+                                                            product.price,
+                                                            product.qty,
+                                                            product.qnty,
+                                                            product.imageUrl,
+                                                            product.documentId,
+                                                            product.supid,
+                                                          );
+                                                },
+                                                icon: const Icon(
+                                                    Icons.add_shopping_cart),
+                                              ),
                                       ],
                                     )
                                   ],

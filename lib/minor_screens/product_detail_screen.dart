@@ -38,6 +38,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       child: ScaffoldMessenger(
         key: _snackKey,
         child: Scaffold(
+          backgroundColor: Colors.grey.shade100,
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -81,8 +82,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 )),
                           )),
                       Positioned(
-                          right: 15,
-                          top: 25,
+                          right: 14,
+                          top: 23,
                           child: CircleAvatar(
                             backgroundColor: Colors.yellow,
                             child: IconButton(
@@ -96,7 +97,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 20),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -131,28 +132,45 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                           ),
                           IconButton(
-                              onPressed: () {
-                                context.read<Wish>().getWishItems.firstWhereOrNull(
-                                            (product) =>
-                                                product.documentId ==
-                                                widget.proList['proId']) !=
-                                        null
-                                    ? MyMessageHandler.showSnackBar(
-                                        _snackKey, 'this item already wish')
-                                    : context.read<Wish>().addWishItem(
-                                          widget.proList['proname'],
-                                          widget.proList['price'],
-                                          1,
-                                          widget.proList['instock'],
-                                          widget.proList['proImage'],
-                                          widget.proList['proId'],
-                                          widget.proList['sid'],
-                                        );
-                              },
-                              icon: const Icon(
-                                Icons.favorite_border_outlined,
-                                color: Colors.pink,
-                              )),
+                            onPressed: () {
+                              context
+                                          .read<Wish>()
+                                          .getWishItems
+                                          .firstWhereOrNull((product) =>
+                                              product.documentId ==
+                                              widget.proList['proId']) !=
+                                      null
+                                  ? context
+                                      .read<Wish>()
+                                      .removeThis(widget.proList['proId'])
+                                  : context.read<Wish>().addWishItem(
+                                        widget.proList['proname'],
+                                        widget.proList['price'],
+                                        1,
+                                        widget.proList['instock'],
+                                        widget.proList['proImage'],
+                                        widget.proList['proId'],
+                                        widget.proList['sid'],
+                                      );
+                            },
+                            icon: context
+                                        .watch<Wish>()
+                                        .getWishItems
+                                        .firstWhereOrNull((product) =>
+                                            product.documentId ==
+                                            widget.proList['proId']) !=
+                                    null
+                                ? const Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                    size: 30,
+                                  )
+                                : const Icon(
+                                    Icons.favorite_outline,
+                                    color: Colors.red,
+                                    size: 30,
+                                  ),
+                          ),
                         ],
                       ),
                       Text(
@@ -170,12 +188,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             fontWeight: FontWeight.w600,
                             color: Colors.blueGrey.shade800),
                       ),
-                    ],
-                  ),
-                ),
-                const ProductDivider(
-                    producItemDescription: 'Recommended Items'),
-                SizedBox(
+                      const ProductDivider(
+                      producItemDescription: 'Recommended Items'),
+                      SizedBox(
                   child: StreamBuilder<QuerySnapshot>(
                     stream: _productStream,
                     builder: (BuildContext context,
@@ -217,11 +232,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     },
                   ),
                 )
+                    ],
+                  ),
+                ), 
               ],
             ),
           ),
           bottomSheet: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -269,7 +287,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 widget.proList['sid'],
                               );
                     },
-                    width: 0.55)
+                    width: 0.50)
               ],
             ),
           ),
@@ -291,7 +309,7 @@ class ProductDivider extends StatelessWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           SizedBox(
             height: 40,
-            width: 60,
+            width: 50,
             child: Divider(
               color: Colors.yellow.shade900,
               thickness: 1,
@@ -305,8 +323,8 @@ class ProductDivider extends StatelessWidget {
                 fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 40,
-            width: 60,
+            height: 20,
+            width: 50,
             child: Divider(
               color: Colors.yellow.shade900,
               thickness: 1,

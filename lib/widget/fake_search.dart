@@ -41,7 +41,7 @@ class FakeScreen extends StatelessWidget {
                ),
              ],
            ),
-          //const  SizedBox(width: 10,),
+          const  SizedBox(width: 10,),
             Container(
              height: 35,
              width: 80,
