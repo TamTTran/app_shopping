@@ -4,7 +4,6 @@ class MyAlertDialog {
   static void showMyAlertDialog({
     required BuildContext context,
     required String title,
-    required String router,
     required String content,
     required Function() tabYes,
     required Function() tabNo,

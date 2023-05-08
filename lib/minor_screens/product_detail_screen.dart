@@ -4,6 +4,7 @@ import 'package:data_mysql/main_screens/visit_store.dart';
 import 'package:data_mysql/minor_screens/full_screen_view.dart';
 import 'package:data_mysql/model/product_modle.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
+import 'package:data_mysql/provider/wish_provider.dart';
 import 'package:data_mysql/widget/appbar_widgets.dart';
 import 'package:data_mysql/widget/snackbar_widget.dart';
 import 'package:data_mysql/widget/yellow_btn_widget.dart';
@@ -130,7 +131,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                           ),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.read<Wish>().getWishItems.firstWhereOrNull(
+                                            (product) =>
+                                                product.documentId ==
+                                                widget.proList['proId']) !=
+                                        null
+                                    ? MyMessageHandler.showSnackBar(
+                                        _snackKey, 'this item already wish')
+                                    : context.read<Wish>().addWishItem(
+                                          widget.proList['proname'],
+                                          widget.proList['price'],
+                                          1,
+                                          widget.proList['instock'],
+                                          widget.proList['proImage'],
+                                          widget.proList['proId'],
+                                          widget.proList['sid'],
+                                        );
+                              },
                               icon: const Icon(
                                 Icons.favorite_border_outlined,
                                 color: Colors.pink,
@@ -242,14 +260,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ? MyMessageHandler.showSnackBar(
                               _snackKey, 'this item already cart')
                           : context.read<Cart>().addItem(
-                            widget.proList['proname'],
-                            widget.proList['price'],
-                            1,
-                            widget.proList['instock'],
-                            widget.proList['proImage'],
-                            widget.proList['proId'],
-                            widget.proList['sid'],
-                          );
+                                widget.proList['proname'],
+                                widget.proList['price'],
+                                1,
+                                widget.proList['instock'],
+                                widget.proList['proImage'],
+                                widget.proList['proId'],
+                                widget.proList['sid'],
+                              );
                     },
                     width: 0.55)
               ],

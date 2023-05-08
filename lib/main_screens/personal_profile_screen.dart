@@ -288,7 +288,6 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
                                     MyAlertDialog.showMyAlertDialog(
                                         context: context,
                                         title: 'Log out',
-                                        router: '/welcome_come_screen',
                                         content: 'Are you log out ?',
                                         tabNo: () {
                                           Navigator.pop(context);

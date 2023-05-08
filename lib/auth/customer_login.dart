@@ -21,7 +21,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
       GlobalKey<ScaffoldMessengerState>();
 
   
-Future<void> login() async {
+void login() async {
   setState(() {
     isProcess = true;
   });
@@ -145,7 +145,7 @@ Future<void> login() async {
                               ),
                         )),
                     HaveAccount(
-                        haveAccount: 'Do not' ' Have Account ?',
+                        haveAccount: 'Do not Have Account ?',
                         onPressed: () {
                           Navigator.pushReplacementNamed(
                               context, '/customer_screen');
@@ -155,8 +155,8 @@ Future<void> login() async {
                         ? const Center(child: CircularProgressIndicator())
                         : MateralBtnSignUp(
                             label: 'LogIn',
-                            onPressed: () async {
-                              await login();
+                            onPressed: ()  {
+                               login();
                             },
                           )
                   ]),

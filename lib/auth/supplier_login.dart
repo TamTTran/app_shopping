@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 
 import 'package:data_mysql/widget/auth_widget.dart';
 import 'package:data_mysql/widget/snackbar_widget.dart';
@@ -23,7 +22,7 @@ class _SupplierLoginState extends State<SupplierLogin> {
       GlobalKey<ScaffoldMessengerState>();
 
 
-Future<void> login() async {
+void login() async {
   setState(() {
     isProcess = true;
   });
@@ -46,7 +45,7 @@ Future<void> login() async {
           MyMessageHandler.showSnackBar(_snackKey, 'Wrong password provided for that user.');
           break;
         default:
-          MyMessageHandler.showSnackBar(_snackKey, 'An error occurred. Please try again later.');
+          MyMessageHandler.showSnackBar(_snackKey, 'An error email or password. Please try again later.');
           break;
       }
     } catch (e) {
@@ -149,18 +148,19 @@ Future<void> login() async {
                               ),
                         )),
                     HaveAccount(
-                        haveAccount: 'Do not have Account ?',
+                        haveAccount: 'Don\'t Have Account ?',
+                        login: 'Sign up',
                         onPressed: () {
                           Navigator.pushReplacementNamed(
                               context, '/supplier_signup');
                         },
-                        login: 'Sign up'),
+                        ),
                     isProcess == true
                         ? const Center(child: CircularProgressIndicator())
                         : MateralBtnSignUp(
                             label: 'LogIn',
-                            onPressed: () async {
-                              await login();
+                            onPressed: () {
+                               login();
                             },
                           )
                   ]),

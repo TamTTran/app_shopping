@@ -6,21 +6,20 @@ import 'package:data_mysql/main_screens/customer_screen.dart';
 import 'package:data_mysql/main_screens/suplier_home_screen.dart';
 import 'package:data_mysql/main_screens/welcome_come_screen.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
+import 'package:data_mysql/provider/wish_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- await Firebase.initializeApp();
- runApp(MultiProvider (
-  providers: [
-    ChangeNotifierProvider(create: (_)=> Cart())
-  ],
-  child: const MyApp())
- );
+  await Firebase.initializeApp();
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(  create: (_) => Cart()),
+    ChangeNotifierProvider(  create: (_) => Wish()),
+  
+], child: const MyApp()));
 }
- 
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,22 +28,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter app connect databaese Firebase',
-      theme: ThemeData(
-      primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      //home: const WelcomeComeScreen(),
-      initialRoute: '/welcome_come_screen',
-      routes: {
-        '/welcome_come_screen':(context) => const WelcomeComeScreen(),
-        '/customer_screen':(context) => const CustomerScreen(),
-        '/suplier_home_screen':(context) => const SuplierHomeScreen(), 
-        '/customer_signup': (context) => const CustomerSignup(),
-        '/customer_login':(context) => const CustomerLogin(),
-        '/supplier_login':(context) => const SupplierLogin(),
-        '/supplier_signup':(context) => const SupplierSignUp(),
-      }        
-  );
+        title: 'Flutter app connect databaese Firebase',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        //home: const WelcomeComeScreen(),
+        initialRoute: '/welcome_come_screen',
+        routes: {
+          '/welcome_come_screen': (context) => const WelcomeComeScreen(),
+          '/customer_screen': (context) => const CustomerScreen(),
+          '/suplier_home_screen': (context) => const SuplierHomeScreen(),
+          '/customer_signup': (context) => const CustomerSignup(),
+          '/customer_login': (context) => const CustomerLogin(),
+          '/supplier_login': (context) => const SupplierLogin(),
+          '/supplier_signup': (context) => const SupplierSignUp(),
+        });
   }
 }
