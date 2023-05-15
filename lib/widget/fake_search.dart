@@ -23,8 +23,8 @@ class FakeScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
          children:  [
-           Row(
-             children: const [
+           const Row(
+             children: [
                Padding(
                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                  child: Icon(

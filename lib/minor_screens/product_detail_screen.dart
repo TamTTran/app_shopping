@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 import 'package:collection/collection.dart';
+import 'package:badges/badges.dart' as badges;
 
 class ProductDetailScreen extends StatefulWidget {
   final dynamic proList;
@@ -32,8 +33,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final GlobalKey<ScaffoldMessengerState> _snackKey =
       GlobalKey<ScaffoldMessengerState>();
   late List<dynamic> imageList = widget.proList['proImage'];
+
   @override
   Widget build(BuildContext context) {
+    late var exitingItemWishList = context
+        .read<Wish>()
+        .getWishItems
+        .firstWhereOrNull(
+            (product) => product.documentId == widget.proList['proId']);
+    late var exitingItemCart = context
+        .watch<Wish>()
+        .getWishItems
+        .firstWhereOrNull(
+            (product) => product.documentId == widget.proList['proId']);
     return SafeArea(
       child: ScaffoldMessenger(
         key: _snackKey,
@@ -133,13 +145,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                           IconButton(
                             onPressed: () {
-                              context
-                                          .read<Wish>()
-                                          .getWishItems
-                                          .firstWhereOrNull((product) =>
-                                              product.documentId ==
-                                              widget.proList['proId']) !=
-                                      null
+                              exitingItemWishList != null
                                   ? context
                                       .read<Wish>()
                                       .removeThis(widget.proList['proId'])
@@ -153,13 +159,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         widget.proList['sid'],
                                       );
                             },
-                            icon: context
-                                        .watch<Wish>()
-                                        .getWishItems
-                                        .firstWhereOrNull((product) =>
-                                            product.documentId ==
-                                            widget.proList['proId']) !=
-                                    null
+                            icon: exitingItemCart != null
                                 ? const Icon(
                                     Icons.favorite,
                                     color: Colors.red,
@@ -189,52 +189,54 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             color: Colors.blueGrey.shade800),
                       ),
                       const ProductDivider(
-                      producItemDescription: 'Recommended Items'),
+                          producItemDescription: 'Recommended Items'),
                       SizedBox(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: _productStream,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return const Text('Something went wrong');
-                      }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      if (snapshot.data!.docs.isEmpty) {
-                        return const Center(
-                            child: Text(
-                          'This category \n\n ahs item yet !!!',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 26,
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Acme',
-                              letterSpacing: 1.5),
-                        ));
-                      }
-                      return SingleChildScrollView(
-                        child: StaggeredGridView.countBuilder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.docs.length,
-                          crossAxisCount: 2,
-                          itemBuilder: (context, index) {
-                            return Productmodel(
-                                products: snapshot.data!.docs[index]);
-                          },
-                          staggeredTileBuilder: (context) {
-                            return const StaggeredTile.fit(1);
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: _productStream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text('Something went wrong');
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                            if (snapshot.data!.docs.isEmpty) {
+                              return const Center(
+                                  child: Text(
+                                'This category \n\n ahs item yet !!!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 26,
+                                    color: Colors.blueGrey,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Acme',
+                                    letterSpacing: 1.5),
+                              ));
+                            }
+                            return SingleChildScrollView(
+                              child: StaggeredGridView.countBuilder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.docs.length,
+                                crossAxisCount: 2,
+                                itemBuilder: (context, index) {
+                                  return Productmodel(
+                                      products: snapshot.data!.docs[index]);
+                                },
+                                staggeredTileBuilder: (context) {
+                                  return const StaggeredTile.fit(1);
+                                },
+                              ),
+                            );
                           },
                         ),
-                      );
-                    },
-                  ),
-                )
+                      )
                     ],
                   ),
-                ), 
+                ),
               ],
             ),
           ),
@@ -265,7 +267,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       },
                     ));
                   },
-                  icon: const Icon(Icons.shopping_cart),
+                  icon: badges.Badge(
+                      position: badges.BadgePosition.topEnd(top: -10, end: -12),
+                      badgeContent: Text(
+                          context.watch<Cart>().getItems.length.toString()),
+                      child: const Icon(Icons.shopping_cart)),
                 ),
                 YellowBtn(
                     label: 'add to cart'.toUpperCase(),

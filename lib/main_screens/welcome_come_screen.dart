@@ -1,9 +1,7 @@
-// ignore_for_file: duplicate_import
 
 import 'dart:math';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:data_mysql/main_screens/cart_screen.dart';
 import 'package:data_mysql/widget/yellow_btn_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

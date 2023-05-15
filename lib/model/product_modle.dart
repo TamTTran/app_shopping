@@ -14,8 +14,19 @@ class Productmodel extends StatefulWidget {
 }
 
 class _ProductmodelState extends State<Productmodel> {
+  
   @override
   Widget build(BuildContext context) {
+    late var exitingItemWishList = context
+      .read<Wish>()
+      .getWishItems
+      .firstWhereOrNull(
+          (product) => product.documentId == widget.products['proId']);
+  late var exitingItemCart = context
+      .watch<Wish>()
+      .getWishItems
+      .firstWhereOrNull(
+          (product) => product.documentId == widget.products['proId']);
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
@@ -42,7 +53,8 @@ class _ProductmodelState extends State<Productmodel> {
                     minHeight: 100,
                     maxHeight: 250,
                   ),
-                  child: Image(image: NetworkImage(widget.products['proImage'][0])),
+                  child: Image(
+                      image: NetworkImage(widget.products['proImage'][0])),
                 ),
               ),
               Padding(
@@ -82,44 +94,33 @@ class _ProductmodelState extends State<Productmodel> {
                                 ),
                               )
                             : IconButton(
-                                onPressed: () { context
+                                onPressed: () {
+                                  exitingItemWishList != null
+                                      ? context
                                           .read<Wish>()
-                                          .getWishItems
-                                          .firstWhereOrNull((product) =>
-                                              product.documentId ==
-                                              widget.products['proId']) !=
-                                      null
-                                  ? context
-                                      .read<Wish>()
-                                      .removeThis(widget.products['proId'])
-                                  : context.read<Wish>().addWishItem(
-                                        widget.products['proname'],
-                                        widget.products['price'],
-                                        1,
-                                        widget.products['instock'],
-                                        widget.products['proImage'],
-                                        widget.products['proId'],
-                                        widget.products['sid'],
-                                      );
-                            },
-                            icon: context
-                                        .watch<Wish>()
-                                        .getWishItems
-                                        .firstWhereOrNull((product) =>
-                                            product.documentId ==
-                                            widget.products['proId']) !=
-                                    null
-                                ? const Icon(
-                                    Icons.favorite,
-                                    color: Colors.red,
-                                    size: 30,
-                                  )
-                                : const Icon(
-                                    Icons.favorite_outline,
-                                    color: Colors.red,
-                                    size: 30,
-                                  ),
-                          ),
+                                          .removeThis(widget.products['proId'])
+                                      : context.read<Wish>().addWishItem(
+                                            widget.products['proname'],
+                                            widget.products['price'],
+                                            1,
+                                            widget.products['instock'],
+                                            widget.products['proImage'],
+                                            widget.products['proId'],
+                                            widget.products['sid'],
+                                          );
+                                },
+                                icon: exitingItemCart != null
+                                    ? const Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                        size: 30,
+                                      )
+                                    : const Icon(
+                                        Icons.favorite_outline,
+                                        color: Colors.red,
+                                        size: 30,
+                                      ),
+                              ),
                       ],
                     )
                   ],
