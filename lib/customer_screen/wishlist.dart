@@ -3,7 +3,7 @@ import 'package:data_mysql/model/wishlist_modle.dart';
 import 'package:data_mysql/provider/wish_provider.dart';
 import 'package:data_mysql/widget/alert_dialog.dart';
 import 'package:data_mysql/widget/appbar_widgets.dart';
-import 'package:data_mysql/widget/yellow_btn_widget.dart';
+//import 'package:data_mysql/widget/yellow_btn_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,31 +61,6 @@ class WishListScreenState extends State<WishListScreen> {
           body: context.watch<Wish>().getWishItems.isNotEmpty
               ? const CartWishItems()
               : const EmptyCart(),
-/*           bottomSheet: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const Row(
-                children:  [
-                  Text(
-                    'Total:  \$',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Text(
-                    '00.00',
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              YellowBtn(
-                label: 'Check out',
-                onPressed: () {},
-                width: 0.45,
-              )
-            ],
-          ), */
         ),
       ),
     );

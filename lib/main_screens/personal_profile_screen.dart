@@ -21,8 +21,6 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
       FirebaseFirestore.instance.collection('customer');
   CollectionReference anonymous =
       FirebaseFirestore.instance.collection('anonymous');
- 
- 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
@@ -255,7 +253,7 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen> {
                                   onPressed: () {},
                                   subTitile: data['address'] == ''
                                       ? 'Example: HCM City'
-                                      : data['addresss']),
+                                      : data['address']),
                               const YellowDivder(),
                             ],
                           ),
