@@ -61,7 +61,7 @@ class WishListScreenState extends State<WishListScreen> {
           body: context.watch<Wish>().getWishItems.isNotEmpty
               ? const CartWishItems()
               : const EmptyCart(),
-          bottomSheet: Row(
+/*           bottomSheet: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const Row(
@@ -85,7 +85,7 @@ class WishListScreenState extends State<WishListScreen> {
                 width: 0.45,
               )
             ],
-          ),
+          ), */
         ),
       ),
     );

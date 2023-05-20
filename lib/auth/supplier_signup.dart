@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:data_mysql/widget/alert_dialog.dart';
 import 'package:data_mysql/widget/auth_widget.dart';
 import 'package:data_mysql/widget/snackbar_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -231,7 +230,7 @@ class _SupplierSignUpState extends State<SupplierSignUp> {
                             }
                             return null;
                           },
-                          // controller: _emailController,
+                          
                           onChanged: (value) {
                             email = value;
                           },

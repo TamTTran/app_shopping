@@ -3,6 +3,7 @@ import 'package:data_mysql/main_screens/category_screen.dart';
 import 'package:data_mysql/main_screens/home_screen.dart';
 import 'package:data_mysql/main_screens/personal_profile_screen.dart';
 import 'package:data_mysql/main_screens/stories_screen.dart';
+import 'package:data_mysql/widget/Cart_badge.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +41,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
               backgroundColor: Colors.red),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: "Category"),
           BottomNavigationBarItem(icon: Icon(Icons.shop), label: "Stores"),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Cart"),
+          BottomNavigationBarItem(icon: Cart_Badge(), label: "Cart"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
         onTap: (index) {

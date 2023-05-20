@@ -112,10 +112,10 @@ class _VisitStoreState extends State<VisitStore> {
                                 ),
                                 child: MaterialButton(
                                     onPressed: () {},
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
-                                      children: const [
+                                      children:  [
                                         Text('Edit'),
                                         Icon(
                                           Icons.edit,

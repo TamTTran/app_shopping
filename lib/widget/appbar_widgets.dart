@@ -66,13 +66,15 @@ class AppBarTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: const TextStyle(
-          color: Colors.black,
-          fontFamily: 'Acme',
-          fontSize: 28,
-          letterSpacing: 1.5),
+    return Center(
+      child: Text(
+        title,
+        style: const TextStyle(
+            color: Colors.black,
+            fontFamily: 'Acme',
+            fontSize: 28,
+            letterSpacing: 1.5),
+      ),
     );
   }
 }

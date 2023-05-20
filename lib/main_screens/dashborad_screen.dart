@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_mysql/dashboard_component/edit_profile.dart';
 import 'package:data_mysql/dashboard_component/manager_products.dart';
-import 'package:data_mysql/dashboard_component/my_store.dart';
+//import 'package:data_mysql/dashboard_component/my_store.dart';
 import 'package:data_mysql/dashboard_component/suplier_order.dart';
 import 'package:data_mysql/dashboard_component/supp_balance.dart';
 import 'package:data_mysql/dashboard_component/supp_statics.dart';

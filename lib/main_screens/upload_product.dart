@@ -6,9 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid.dart';
+//import 'package:uuid/uuid.dart';
 
 class UploadProduct extends StatefulWidget {
   const UploadProduct({Key? key}) : super(key: key);

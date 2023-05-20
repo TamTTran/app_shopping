@@ -1,9 +1,9 @@
-
+import 'package:data_mysql/minor_screens/place_order_scrren.dart';
 import 'package:data_mysql/model/cart_model.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
 import 'package:data_mysql/widget/alert_dialog.dart';
-import 'package:data_mysql/widget/yellow_btn_widget.dart';
-import 'package:flutter/cupertino.dart';
+
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +18,7 @@ class CartScreen extends StatefulWidget {
 class CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    double total = context.read<Cart>().totalPrice;
     return Material(
       child: SafeArea(
         child: Scaffold(
@@ -58,8 +59,8 @@ class CartScreenState extends State<CartScreen> {
             ],
           ),
           body: context.watch<Cart>().getItems.isNotEmpty
-              ? CartItems()
-              : EmptyCart(),
+              ? const CartItems()
+              : const EmptyCart(),
           bottomSheet: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -70,7 +71,7 @@ class CartScreenState extends State<CartScreen> {
                     style: TextStyle(fontSize: 18),
                   ),
                   Text(
-                    context.read<Cart>().totalPrice.toStringAsFixed(2),
+                    total.toStringAsFixed(2),
                     style: const TextStyle(
                         color: Colors.red,
                         fontSize: 20,
@@ -78,11 +79,30 @@ class CartScreenState extends State<CartScreen> {
                   )
                 ],
               ),
-              YellowBtn(
+              Container(
+                  height: 35,
+                  width: MediaQuery.of(context).size.width * 0.54,
+                  decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: MaterialButton(
+                    onPressed: total == 0.0
+                        ? null
+                        : () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const  PlaceOrderScrren();
+                              },
+                            ));
+                          },
+                    child: const Text('CHECK OUT'),
+                  )),
+              /* YellowBtn(
                 label: 'Check out',
                 onPressed: () {},
                 width: 0.45,
-              )
+              ) */
             ],
           ),
         ),
@@ -149,4 +169,3 @@ class CartItems extends StatelessWidget {
     );
   }
 }
-

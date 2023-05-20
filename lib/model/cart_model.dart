@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:collection/collection.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
 import 'package:data_mysql/provider/product_provider.dart';
@@ -116,6 +118,7 @@ class CartModel extends StatelessWidget {
                                                                 product
                                                                     .supid,
                                                               );
+                                                     
                                                       context
                                                           .read<Cart>()
                                                           .removeItem(

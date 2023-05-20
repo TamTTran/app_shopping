@@ -19,7 +19,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  PageController _pageController = PageController();   
+  final PageController _pageController = PageController();   
   List<ItemData> item = [
     ItemData(lable: 'men'),       
     ItemData(lable: 'women'),
@@ -33,6 +33,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   ];
   @override
   void initState() {
+    super.initState();
     for (var element in item) {
               element.isSelected = false;
             }

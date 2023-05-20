@@ -5,6 +5,7 @@ import 'package:data_mysql/minor_screens/full_screen_view.dart';
 import 'package:data_mysql/model/product_modle.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
 import 'package:data_mysql/provider/wish_provider.dart';
+import 'package:data_mysql/widget/Cart_badge.dart';
 import 'package:data_mysql/widget/appbar_widgets.dart';
 import 'package:data_mysql/widget/snackbar_widget.dart';
 import 'package:data_mysql/widget/yellow_btn_widget.dart';
@@ -14,7 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 import 'package:collection/collection.dart';
-import 'package:badges/badges.dart' as badges;
+
 
 class ProductDetailScreen extends StatefulWidget {
   final dynamic proList;
@@ -40,12 +41,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         .read<Wish>()
         .getWishItems
         .firstWhereOrNull(
-            (product) => product.documentId == widget.proList['proId']);
+            (element) => element.documentId == widget.proList['proId']);
     late var exitingItemCart = context
         .watch<Wish>()
         .getWishItems
         .firstWhereOrNull(
-            (product) => product.documentId == widget.proList['proId']);
+            (element) => element.documentId == widget.proList['proId']);
     return SafeArea(
       child: ScaffoldMessenger(
         key: _snackKey,
@@ -267,20 +268,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       },
                     ));
                   },
-                  icon: badges.Badge(
-                      position: badges.BadgePosition.topEnd(top: -10, end: -12),
-                      badgeContent: Text(
-                          context.watch<Cart>().getItems.length.toString()),
-                      child: const Icon(Icons.shopping_cart)),
+                  icon: const Cart_Badge(),
                 ),
                 YellowBtn(
-                    label: 'add to cart'.toUpperCase(),
+                    label: exitingItemCart != null
+                        ? 'added to cart'.toUpperCase()
+                        : 'ADD TO CART',
                     onPressed: () {
-                      context.read<Cart>().getItems.firstWhereOrNull(
-                                  (product) =>
-                                      product.documentId ==
-                                      widget.proList['proId']) !=
-                              null
+                      exitingItemCart != null
                           ? MyMessageHandler.showSnackBar(
                               _snackKey, 'this item already cart')
                           : context.read<Cart>().addItem(
@@ -302,6 +297,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 }
+
+
 
 class ProductDivider extends StatelessWidget {
   final String producItemDescription;
