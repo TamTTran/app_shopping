@@ -17,7 +17,7 @@ class SubCategProductScreen extends StatefulWidget {
 class _SubCategProductScreen extends State<SubCategProductScreen> {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _productStream = FirebaseFirestore.instance
+    final Stream<QuerySnapshot> productStream = FirebaseFirestore.instance
         .collection('products')
         .where('maincateg', isEqualTo: widget.mainCategName)
         .where('subcateg', isEqualTo: widget.subCategName)
@@ -47,7 +47,7 @@ class _SubCategProductScreen extends State<SubCategProductScreen> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _productStream,
+        stream: productStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went wrong');

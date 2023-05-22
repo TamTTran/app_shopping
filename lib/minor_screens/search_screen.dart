@@ -16,13 +16,13 @@ class _SearchScreenState extends State<SearchScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back_ios_new),
           color: Colors.black,
           onPressed: () {
              Navigator.pop(context); 
           },
         ),
-        title: CupertinoSearchTextField(),
+        title: const CupertinoSearchTextField(),
       ),
     );
   }

@@ -76,10 +76,10 @@ void login() async {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                     const AuthHeaderLabel(headerlabel: 'LogIn'),
-                    Row(
+                    const Row(
                       children: [
                         Column(
-                          children: const [
+                          children: [
                             SizedBox(height: 8.0),
                           ],
                         )

@@ -24,7 +24,7 @@ class _HomegradeCategoryScreenState extends State<HomegradeCategoryScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CatagoryHeaderLabel(lableHeader: 'Home & graden',),
+                const CatagoryHeaderLabel(lableHeader: 'Home & graden',),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.68,
                   child: GridView.count(

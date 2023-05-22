@@ -24,7 +24,7 @@ class _AccessoriesCategoryScreenState extends State<AccessoriesCategoryScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CatagoryHeaderLabel(lableHeader: 'accessories',),
+                const CatagoryHeaderLabel(lableHeader: 'accessories',),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.68,
                   child: GridView.count(

@@ -24,7 +24,7 @@ class _ElectronicCategoryScreenState extends State<ElectronicCategoryScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CatagoryHeaderLabel(lableHeader: 'electronics',),
+                const CatagoryHeaderLabel(lableHeader: 'electronics',),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.68,
                   child: GridView.count(

@@ -12,7 +12,7 @@ class WomenGallery extends StatefulWidget {
   _WomenGalleryState createState() => _WomenGalleryState();
 }
 
-late bool isLike = true;
+bool isLike = true;
 
 class _WomenGalleryState extends State<WomenGallery> {
   final Stream<QuerySnapshot> _productStream = FirebaseFirestore.instance

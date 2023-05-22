@@ -213,12 +213,12 @@ class _UploadProductState extends State<UploadProduct> {
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
                                     return DropdownMenuItem<String>(
+                                        value: value,
                                         child: Text(
                                           value,
                                           style: const TextStyle(
                                               color: Colors.deepPurpleAccent),
-                                        ),
-                                        value: value);
+                                        ));
                                   }).toList(),
                                 ),
                               ],
@@ -246,11 +246,11 @@ class _UploadProductState extends State<UploadProduct> {
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
                                     return DropdownMenuItem<String>(
+                                        value: value,
                                         child: Text(value,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color:
-                                                    Colors.deepPurpleAccent)),
-                                        value: value);
+                                                    Colors.deepPurpleAccent)));
                                   }).toList(),
                                 ),
                               ],

@@ -24,7 +24,7 @@ class _BagsCategoryScreenState extends State<BagsCategoryScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CatagoryHeaderLabel(lableHeader: 'bags',),
+                const CatagoryHeaderLabel(lableHeader: 'bags',),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.68,
                   child: GridView.count(

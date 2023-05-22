@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class PersonalProfileScreen extends StatefulWidget {
   final String documentId;
-  PersonalProfileScreen({Key? key, required this.documentId}) : super(key: key);
+  const PersonalProfileScreen({Key? key, required this.documentId}) : super(key: key);
 
   @override
   _PersonalProfileScreenState createState() => _PersonalProfileScreenState();

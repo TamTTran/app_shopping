@@ -1,3 +1,4 @@
+import 'package:data_mysql/minor_screens/payment_scrren.dart';
 import 'package:data_mysql/provider/cart_provider.dart';
 import 'package:data_mysql/widget/appbar_widgets.dart';
 import 'package:data_mysql/widget/yellow_btn_widget.dart';
@@ -19,6 +20,7 @@ CollectionReference customer =
 class _PlaceOrderScrrenState extends State<PlaceOrderScrren> {
   @override
   Widget build(BuildContext context) {
+    double totalPrice = context.read<Cart>().totalPrice;
     return FutureBuilder<DocumentSnapshot>(
       future: customer.doc(FirebaseAuth.instance.currentUser!.uid).get(),
       builder:
@@ -113,7 +115,8 @@ class _PlaceOrderScrrenState extends State<PlaceOrderScrren> {
                                         ),
                                         Flexible(
                                           child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
                                             children: [
                                               Text(
                                                 order.name,
@@ -126,9 +129,14 @@ class _PlaceOrderScrrenState extends State<PlaceOrderScrren> {
                                                         Colors.grey.shade600),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 4,
+                                                        horizontal: 16),
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Text(
                                                       order.price
@@ -170,8 +178,16 @@ class _PlaceOrderScrrenState extends State<PlaceOrderScrren> {
                 bottomSheet: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: YellowBtn(
-                    label: "Confirm ",
-                    onPressed: () {},
+                    label: "Confirm ${totalPrice.toStringAsFixed(2)} USD",
+                    onPressed: () {
+                      if (totalPrice > 0) {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const PaymentScrren();
+                          },
+                        ));
+                      }
+                    },
                     width: 1,
                   ),
                 ),
